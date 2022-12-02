@@ -3,53 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FollowCam : MonoBehaviour
-{
-    [SerializeField]
-    GameObject player;
-    private Transform camTr;
-    float xRotateMove;
-    float yRotateMove;
-    [SerializeField]
-    float rotateSpeed = 100;
-    float xRotate;
-    float yRotate;
+{   
+    public Transform target;
+    //플레이어
+    public float targetY;
 
-    private Vector3 velocity = Vector3.zero;
-    float pdis;
+    public float xRotMax;
+    public float rotSpeed;
+    public float scrollSpeed;
 
-    void Start()
+    public float distance;
+    public float minDistance;
+    public float maxDistance;
+
+    private float xRot;
+    private float yRot;
+    private Vector3 targetPos;
+    private Vector3 dir;
+
+    private void Update()
     {
-     
-        camTr = GetComponent<Transform>();
-    }
-    void LateUpdate() //��������
-    {
-        //xRotateMove = -Input.GetAxis("Mouse Y") * Time.deltaTime * rotateSpeed;
-        //yRotateMove = Input.GetAxis("Mouse X") * Time.deltaTime * rotateSpeed;
-        transform.position = new Vector3(player.transform.position.x+30, player.transform.position.y+10, player.transform.position.z);
-        camTr.LookAt(player.transform.position + Vector3.up * 2.0f);
-        //yRotate = transform.eulerAngles.y + yRotateMove;
-        ////xRotate = transform.eulerAngles.x + xRotateMove; 
-        //xRotate = xRotate + xRotateMove;
-        //xRotate = Mathf.Clamp(xRotate, -90, 90); // 위, 아래 고정
-        //transform.eulerAngles = new Vector3(xRotate, yRotate, 0);
-        xRotateMove = -Input.GetAxis("Mouse Y") * Time.deltaTime * rotateSpeed;
-        yRotateMove = Input.GetAxis("Mouse X") * Time.deltaTime * rotateSpeed;
-
-        yRotate = transform.eulerAngles.y + yRotateMove;
-        //xRotate = transform.eulerAngles.x + xRotateMove; 
-        xRotate = xRotate + xRotateMove;
-
-        xRotate = Mathf.Clamp(xRotate, -90, 90); // 위, 아래 고정
-
-        transform.eulerAngles = new Vector3(xRotate, yRotate, 0);
-    }
-    //Update is called once per frame
-    void Update()
-    {
-        Cursor.visible = false;                     //마우스 커서가 보이지 않게 함
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-       
+
+        xRot += Input.GetAxis("Mouse Y") * rotSpeed * Time.deltaTime;
+        yRot += Input.GetAxis("Mouse X") * rotSpeed * Time.deltaTime;
+        distance += -Input.GetAxis("Mouse ScrollWheel") * scrollSpeed * Time.deltaTime;
+
+        xRot = Mathf.Clamp(xRot, -xRotMax, xRotMax);
+        distance = Mathf.Clamp(distance, minDistance, maxDistance);
+
+        targetPos = target.position + Vector3.up * targetY;
+
+        dir = Quaternion.Euler(-xRot, yRot, 0f) * Vector3.forward;
+        transform.position = targetPos + dir * -distance;
+
     }
 
+    private void LateUpdate()
+    {
+        transform.LookAt(targetPos);
+    }
 }

@@ -12,7 +12,8 @@ public class player : MonoBehaviour
     public float speed;
     float hAxis;
     float vAxis;
-
+    [SerializeField]
+    Transform orientation;
     Vector3 moveVec;
 
     float rotAxis;
@@ -37,27 +38,44 @@ public class player : MonoBehaviour
         Move();
         Shooting();
         Jump();
-        Turn();
+        //Turn();
     }
 
     void Input_Axis()
     {
         hAxis = Input.GetAxis("Horizontal");
         vAxis = Input.GetAxis("Vertical");
-        rotAxis = Input.GetAxis("Mouse X");
+        //rotAxis = Input.GetAxis("Mouse X");
     }
 
     void Move()
     {
         moveVec = new Vector3(hAxis, 0, vAxis).normalized;
-        Vector3 moveDir = (Vector3.forward * vAxis + Vector3.right * hAxis).normalized;
-
+        //Vector3 moveDir = (Vector3.forward * vAxis + Vector3.right * hAxis).normalized;
+      
         anim.SetBool("IsRun", moveVec != Vector3.zero);
 
-        tr.Translate(moveDir * speed * 1f * Time.deltaTime);
-        tr.Rotate(Vector3.up * rotAxis * rotSpeed * Time.deltaTime);
-    }
+       
+        //tr.Rotate(Vector3.up * rotAxis * rotSpeed * Time.deltaTime);
+        Quaternion q;
+        Vector3 vec;
 
+
+        //prigidbody.AddForce(moveDir.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+        if (hAxis != 0 || vAxis != 0)
+        {
+
+            vec = Camera.main.transform.TransformDirection(new Vector3(hAxis, 0, vAxis));
+            vec.y = 0;
+            q = Quaternion.LookRotation(vec);
+
+            //moveDir = orientation.forward * vAxis + orientation.right * hAxis;
+            //rigid.AddForce(moveDir.normalized * speed * 10f, ForceMode.Force);
+            Vector3 moveDir = orientation.forward * vAxis + orientation.right * -hAxis;
+            transform.rotation = Quaternion.Slerp(transform.rotation, q, 15f * Time.deltaTime);
+            tr.Translate(moveDir.normalized * speed * 1f * Time.deltaTime);
+        }
+    }
     void Jump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && !isjump && isJ < 2)
@@ -69,17 +87,21 @@ public class player : MonoBehaviour
         }
     }
 
-    void Turn()
-    {
-        if (hAxis == 0 && vAxis == 0)
-            return;
+    //void Turn()
+    //{
+    //    if (hAxis == 0 && vAxis == 0)
+    //    {
+    //        transform.rotation = Camera.main.transform.rotation;
+    //        return;
+    //    }
+     
 
-        Quaternion newRotation = Quaternion.LookRotation(moveVec);
+    //    //Quaternion newRotation = Quaternion.LookRotation(moveVec);
 
-
-        rigid.rotation = Quaternion.Slerp(rigid.rotation, newRotation, rotSpeed * Time.deltaTime);
-
-    }
+       
+    //    //rigid.rotation = Quaternion.Slerp(rigid.rotation, newRotation, rotSpeed * Time.deltaTime);
+        
+    //}
 
 
     private float bspeed = 2f;

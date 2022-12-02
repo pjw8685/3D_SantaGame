@@ -191,6 +191,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Idle_Smith
       objectReference: {fileID: 0}
+    - target: {fileID: 4550462751569611783, guid: 7a5ee992037152e4e9065faab040ba4a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4196514299110566090, guid: 7a5ee992037152e4e9065faab040ba4a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7a5ee992037152e4e9065faab040ba4a, type: 3}
@@ -498,7 +503,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 282840810}
   m_LocalRotation: {x: 0.086396605, y: -0.70180887, z: 0.086396605, w: 0.70180887}
-  m_LocalPosition: {x: 66.85219, y: -26.23, z: 549.6786}
+  m_LocalPosition: {x: 66.85219, y: -29.91, z: 549.6786}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -550,8 +555,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92b5e37f69791cb4d93e32a85ab5fd7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1129447797}
-  rotateSpeed: 20
+  target: {fileID: 692518857}
+  targetY: 5
+  xRotMax: -90
+  rotSpeed: 70
+  scrollSpeed: 50
+  distance: 20
+  minDistance: 5
+  maxDistance: 30
 --- !u!114 &282840817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1057,7 +1068,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 692518856}
   m_LocalRotation: {x: -0, y: 0.86602545, z: -0, w: 0.49999997}
-  m_LocalPosition: {x: 0, y: 3.68, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1836,6 +1847,16 @@ PrefabInstance:
       propertyPath: jumpForce
       value: 4.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7178353885522632411, guid: d41f7c30c834f214bb910d4d1f6315bb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7178353885522632411, guid: d41f7c30c834f214bb910d4d1f6315bb,
+        type: 3}
+      propertyPath: orientation
+      value: 
+      objectReference: {fileID: 692518857}
     - target: {fileID: 7178353886539414264, guid: d41f7c30c834f214bb910d4d1f6315bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2348,6 +2369,50 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 927186844}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1983420618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129447797}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90cb7cc1510f34f3b8c633b12000e231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WalkSpeed: 5
+  SprintSpeed: 7
+  moveSpeed: 0
+  jumpForce: 10
+  airMultiplier: 0.4
+  slideSpeed: 10
+  airDashSpeed: 20
+  airDashSpeedChangeFactor: 50
+  crouchSpeed: 5
+  desiredMoveSpeed: 0
+  lastDesiredMoveSpeed: 0
+  gravityForce: 6
+  hAxis: 0
+  vAxis: 0
+  groundDrag: 5
+  grounded: 0
+  isJump: 0
+  isDash: 0
+  isEffect: 0
+  controllCan: 0
+  isSlidng: 0
+  keepMoment: 0
+  isBlow: 0
+  arrowLayer: 0
+  downhillroad: 0
+  lookArrow: 0
+  jumpCnt: 2
+  dashCnt: 1
+  landingCnt: 1
+  slideForce: 200
+  moveDir: {x: 0, y: 0, z: 0}
+  orientation: {fileID: 0}
 --- !u!1 &2047250089 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3611abbcc2c878b40895c4a50894d507,

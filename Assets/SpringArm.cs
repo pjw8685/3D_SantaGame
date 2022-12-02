@@ -1,6 +1,7 @@
 //using UnityEditor;
 using System.Linq.Expressions;
 using UnityEngine;
+
 using UnityEngine.UIElements;
 
 [ExecuteAlways]
@@ -14,10 +15,10 @@ public class SpringArm : MonoBehaviour
 
     public float movementSmoothTime = 0.05f;
     public float targetArmLength = 3f;
-    public float desirtargetArmLength ;
+    public float desirtargetArmLength;
     public Vector3 socketOffset;
     public Vector3 targetOffset;
-    
+
     [Space]
     [Header("Collision Settings \n-----------------------")]
     [Space]
@@ -32,7 +33,7 @@ public class SpringArm : MonoBehaviour
     [Header("Rotation Settings \n-----------------------")]
     [Space]
     public bool useControlRotation = true;
-    [Range(50,200)]
+    [Range(50, 200)]
     public float mouseSensitivity = 100;
 
     [Space]
@@ -45,9 +46,9 @@ public class SpringArm : MonoBehaviour
     public bool showRaycasts;
     public bool showCollisionProbe;
 
-    //PlayerAnimation playerAnimation;
-    //Movement movement;
-    //PlayerAction playerAction;
+
+    player movement;
+
     private void Awake()
     {
         desirtargetArmLength = 6f;
@@ -75,20 +76,19 @@ public class SpringArm : MonoBehaviour
     public bool controllCan = true;
 
     Slider mouseSlider;
-    Vector3 l_vector;
+
     //public GameObject Crosshair;
     #endregion
 
     private void Start()
     {
-        l_vector = target.transform.position - transform.position;
+
         raycastPositions = new Vector3[collisionTestResolution];
         hits = new RaycastHit[collisionTestResolution];
         target = GameObject.Find("Orientation").GetComponent<Transform>();
-        //targetSholder = GameObject.Find("Sholder").GetComponent<Transform>();
-        //playerAnimation = GameObject.Find("Player").GetComponent<PlayerAnimation>();
-        //movement = GameObject.Find("Player").GetComponent<Movement>();
-        //playerAction = GameObject.Find("Player").GetComponent<PlayerAction>();
+
+    
+        movement = GameObject.Find("Player").GetComponent<player>();
 
     }
 
@@ -104,10 +104,8 @@ public class SpringArm : MonoBehaviour
 
     private void Update()
     {
-     
-        //transform.rotation = Quaternion.LookRotation(l_vector).normalized;
         isScroll = Input.GetMouseButton(2);
-        //transform.LookAt(target, Vector3.up * 2);
+
         // if target is null, return from here: NullReference check
         if (!target)
             return;
@@ -120,56 +118,29 @@ public class SpringArm : MonoBehaviour
         SetSocketTransform();
 
         // handle mouse inputs for rotations
-        if (useControlRotation && Application.isPlaying &&controllCan)
+        if (useControlRotation && Application.isPlaying && controllCan)
             Rotate();
 
 
-        //ĳ���� ����, ī�޶� ȸ��
+        //캐릭터 고정, 카메라 회전
         if (!isScroll)
         {
             target.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
         }
 
-        //if (playerAction.IsZoom && movement.grounded )
-        //{
-        //    movement.controllCan = false;
-        //    Zoomin();
-            
-        //}
+     
 
-        //if (!playerAction.IsZoom)
-        //{
-        //    movement.controllCan = true;
-        //    ZoomOut();
-        //}
+
 
         // follow the target applying targetOffset
-     
+
     }
 
-    //private void Zoomin() 
-    //{
-    //    playerAnimation.OnZoom();
-    //    targetArmLength = 4.5f;
-    //    socketOffset = new Vector3(1.5f, 0.0f, 1.5f);
-    //}
-    private void ZoomOut() 
-    {
-
-        //if (Input.GetMouseButtonUp(1))
-        //{
-
-        //    movement.controllCan = true;
-        //    playerAnimation.OffZoom();
-        //}
-        targetArmLength = desirtargetArmLength;
-        socketOffset = new Vector3(0f, 0.4f, 0);
-    }
     private void OnDrawGizmosSelected()
     {
         if (!visualDebugging)
             return;
-       
+
         // Using Handles as they have MSAA, looks better than Gizmos
 
         // Draw main LineTrace or LineTraces of RaycastPositions, useful for debugging

@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{9774FBE3-0612-1881-211A-0FAC81CEE280}</ProjectGuid>
+    <ProjectGuid>{A656E905-D5E5-0943-D55A-261B1BF3760B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Boxophobic.PolyverseSkies.Editor</AssemblyName>
@@ -755,15 +755,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Boxophobic.Utils.Editor.csproj">
-      <Project>{BE143AF5-40BF-696F-45FF-0F55CA38540E}</Project>
+      <Project>{6B095BAF-91F0-747B-B717-CDD99EA6EFAB}</Project>
       <Name>Boxophobic.Utils.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Boxophobic.Utils.Scripts.csproj">
-      <Project>{4A4BB9E9-83C0-B05C-6F03-B8BC9258E6A0}</Project>
+      <Project>{7894587D-A4CE-B01F-59D1-9BFECB7871C4}</Project>
       <Name>Boxophobic.Utils.Scripts</Name>
     </ProjectReference>
     <ProjectReference Include="Boxophobic.PolyverseSkies.Runtime.csproj">
-      <Project>{1926BC92-CFBD-A3D7-D56C-96814B90B545}</Project>
+      <Project>{10171FB7-7523-1791-02AD-2E014D5B0502}</Project>
       <Name>Boxophobic.PolyverseSkies.Runtime</Name>
     </ProjectReference>
   </ItemGroup>
